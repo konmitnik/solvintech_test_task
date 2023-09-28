@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('cbr_data', function (Blueprint $table) {
             $table->id();
-            $table->text('xml_string');
+            // возможно добавить значение с атрибутом вылют - id
             $table->string('data_date');
+            $table->string('valute_num_code');
+            $table->string('valute_char_code');
+            $table->string('nominal');
+            $table->string('valute_name');
+            $table->string('value');
+            $table->string('vunit_rate');
             $table->timestamps();
         });
     }
