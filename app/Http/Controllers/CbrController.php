@@ -26,16 +26,16 @@ class CbrController extends Controller
             ], 400);
         }
 
-        $currentDate = date('d.m.Y');
         if ($cbrData->countEntriesByDate($date_req) > 0) {
             $dataFromCbr = $cbrData->getValutesByDate($date_req);
         } else {
             $dataFromCbr = $this->getXmlData($date_req);
+            $currentDate = strtotime(date('d.m.Y'));
             if ($dataFromCbr->count() == 0)  {
                 return response()->json(['message' => 'Not Found', 'status' => 404], 404);
             }
             $dataFromCbr = ['Date' => $date_req, 'Valute' => $this->xmlToArray($dataFromCbr)['Valute']];
-            if ($currentDate > $date_req) {
+            if ($currentDate > strtotime($date_req)) {
                 $cbrData->createNewEntry($dataFromCbr['Valute'], $date_req);
             }
         }
